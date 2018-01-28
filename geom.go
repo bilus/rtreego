@@ -44,12 +44,12 @@ func (p Point) dist(q Point) float64 {
 	return math.Sqrt(sum)
 }
 
-// minDist computes the square of the distance from a point to a rectangle.
+// MinDist computes the square of the distance from a point to a rectangle.
 // If the point is contained in the rectangle then the distance is zero.
 //
 // Implemented per Definition 2 of "Nearest Neighbor Queries" by
 // N. Roussopoulos, S. Kelley and F. Vincent, ACM SIGMOD, pages 71-79, 1995.
-func (p Point) minDist(r *Rect) float64 {
+func (p Point) MinDist(r *Rect) float64 {
 	if len(p) != len(r.p) {
 		panic(DimError{len(p), len(r.p)})
 	}

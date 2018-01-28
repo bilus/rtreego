@@ -690,7 +690,7 @@ func sortEntries(p Point, entries []entry) ([]entry, []float64) {
 	dists := make([]float64, len(entries))
 	for i := 0; i < len(entries); i++ {
 		sorted[i] = entries[i]
-		dists[i] = p.minDist(entries[i].bb)
+		dists[i] = p.MinDist(entries[i].bb)
 	}
 	sort.Sort(entrySlice{sorted, dists})
 	return sorted, dists
@@ -704,7 +704,7 @@ func pruneEntries(p Point, entries []entry, minDists []float64) []entry {
 			minMinMaxDist = minMaxDist
 		}
 	}
-	// remove all entries with minDist > minMinMaxDist
+	// remove all entries with MinDist > minMinMaxDist
 	pruned := []entry{}
 	for i := range entries {
 		if minDists[i] <= minMinMaxDist {
@@ -727,7 +727,7 @@ func pruneEntriesMinDist(d float64, entries []entry, minDists []float64) []entry
 func (tree *Rtree) nearestNeighbor(p Point, n *node, d float64, nearest Spatial) (Spatial, float64) {
 	if n.leaf {
 		for _, e := range n.entries {
-			dist := math.Sqrt(p.minDist(e.bb))
+			dist := math.Sqrt(p.MinDist(e.bb))
 			if dist < d {
 				d = dist
 				nearest = e.obj
@@ -793,7 +793,7 @@ func (tree *Rtree) nearestNeighbors(k int, p Point, n *node, dists []float64, ne
 	var abort bool
 	if n.leaf {
 		for _, e := range n.entries {
-			dist := p.minDist(e.bb)
+			dist := p.MinDist(e.bb)
 			dists, nearest, abort = insertNearest(k, dists, nearest, dist, e.obj, filters)
 			if abort {
 				break
